@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 # 必要なパッケージのインストール
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends curl \
+  && apt-get install -y --no-install-recommends curl git \
   && curl -sSL https://install.python-poetry.org | python3 - \
   && ln -s /root/.local/bin/poetry /usr/local/bin/poetry \
   && apt-get clean \
