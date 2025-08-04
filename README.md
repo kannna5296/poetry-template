@@ -64,3 +64,75 @@ Poetry公式ドキュメント: https://python-poetry.org/docs/cli/#install
 
 ---
 Poetry公式ドキュメント: https://python-poetry.org/docs/configuration/#virtualenvscreate 
+
+
+# poetry.lock とは何か？
+
+`poetry.lock` は、Poetry が **依存パッケージの正確なバージョンを固定・記録するファイル** です。  
+npm の `package-lock.json` や pip の `requirements.txt` のような役割を果たします。
+
+---
+
+## なぜ必要？
+
+### ✅ 再現性（Reproducibility）
+
+`pyproject.toml` では柔軟なバージョン指定（例: `^7.0.0`）ができますが、それだと環境によって入るバージョンが変わってしまう可能性があります。  
+一方で `poetry.lock` は **その時点で解決されたバージョンをピンポイントで固定**してくれるので、どの環境でも同じ挙動を保証できます。
+
+> 例：  
+> `pyproject.toml` → `pytest = "^7.0.0"`  
+> `poetry.lock` → `pytest==7.0.1` と明示的にロック
+
+---
+
+### ✅ 依存の依存（transitive dependencies）も固定される
+
+直接指定したパッケージだけでなく、それが依存しているパッケージ（transitive dependencies）のバージョンも `poetry.lock` に記録されます。
+
+---
+
+## 開発者としての使い方
+
+| コマンド              | 目的                                     |
+|-----------------------|------------------------------------------|
+| `poetry install`      | `poetry.lock` に従って依存をインストール |
+| `poetry lock`         | `pyproject.toml` に基づき lock を更新     |
+| `poetry update`       | 依存パッケージを最新に更新しつつ lock も再作成 |
+
+---
+
+## `poetry.lock` を更新するケース
+
+- `pyproject.toml` を編集（依存パッケージの追加/削除）
+- Python のバージョンを変更した
+- セキュリティ対応や機能追加のために依存をアップデートしたい
+
+---
+
+## Git でコミットすべき？
+
+**Yes！**
+
+`poetry.lock` は、**開発環境やCI/CD、本番環境における挙動の再現性を保証するため**に必ずコミットすべきです。
+
+---
+
+## まとめ
+
+| 項目           | 内容                                                                 |
+|----------------|----------------------------------------------------------------------|
+| 用途           | 再現性ある環境構築                                                    |
+| 管理対象       | 直接の依存 & 間接の依存                                                |
+| コミット対象？ | **Yes（絶対にバージョン固定したいなら必須）**                        |
+| 編集方法       | 基本は `poetry install` や `poetry update` で自動生成・更新される     |
+
+
+poetry install と poetry.lock の関係
+初めて依存をインストールする時（poetry.lock が存在しない状態）
+→ pyproject.toml の依存情報を元に解決して依存バージョンを決め、
+→ その解決結果が poetry.lock に書き込まれます。
+→ 依存パッケージをインストールします。
+
+すでに poetry.lock がある時
+→ poetry.lock に書かれたバージョンに沿って依存パッケージをインストールします。
