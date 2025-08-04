@@ -1,0 +1,13 @@
+{
+  "name": "poetry-prac-dev",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "settings": {},
+  "extensions": [
+    "ms-python.python",
+    "ms-python.vscode-pylance"
+  ],
+  "postCreateCommand": "poetry config virtualenvs.in-project true && poetry install",
+  "workspaceFolder": "/workspaces"
+}
