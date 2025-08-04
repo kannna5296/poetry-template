@@ -8,6 +8,5 @@
     "ms-python.python",
     "ms-python.vscode-pylance"
   ],
-  "postCreateCommand": "poetry config virtualenvs.in-project true && poetry install",
-  "workspaceFolder": "/workspaces"
+  "postCreateCommand": "poetry config virtualenvs.in-project true && poetry install"
 }
