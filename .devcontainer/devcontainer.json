@@ -8,5 +8,5 @@
     "ms-python.python",
     "ms-python.vscode-pylance"
   ],
-  "postCreateCommand": ".devcontainer/setup-poetry.sh"
+  "postCreateCommand": "chmod +x .devcontainer/setup-poetry.sh && sh .devcontainer/setup-poetry.sh"
 }
