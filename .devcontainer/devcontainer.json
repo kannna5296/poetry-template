@@ -1,5 +1,5 @@
 {
-  "name": "poetry-prac-dev",
+  "name": "poetry-template",
   "build": {
     "dockerfile": "Dockerfile"
   },
